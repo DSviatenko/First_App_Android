@@ -18,8 +18,17 @@
             android:id="@+id/movieDetailFragment"
             android:name="com.example.firstapplication.MovieDetailFragment"
             android:label="Movie Detail Fragment">
+        <action
+                android:id="@+id/action_movieDetailFragment_to_movieListFragment"
+                app:destination="@id/movieListFragment"/>
         <argument
-                android:name="selectedMovie"
-                app:argType="com.example.firstapplication.Movie" />
+                android:name="Title"
+                app:argType="string"/>
+        <argument
+                android:name="Description"
+                app:argType="string"/>
+        <argument
+                android:name="Image"
+                app:argType="integer"/>
     </fragment>
 </navigation>

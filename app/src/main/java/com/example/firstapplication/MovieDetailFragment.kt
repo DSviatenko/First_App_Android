@@ -4,95 +4,45 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import com.bumptech.glide.Glide
-
-
-/**
- * A simple [Fragment] subclass.
- * Use the [MovieDetailFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-//class MovieDetailFragment : Fragment() {
-//    // TODO: Rename and change types of parameters
-//    private var param1: String? = null
-//    private var param2: String? = null
-//
-//    override fun onCreate(savedInstanceState: Bundle?) {
-//        super.onCreate(savedInstanceState)
-//        arguments?.let {
-//            param1 = it.getString(ARG_PARAM1)
-//            param2 = it.getString(ARG_PARAM2)
-//        }
-//    }
-//
-//    override fun onCreateView(
-//        inflater: LayoutInflater, container: ViewGroup?,
-//        savedInstanceState: Bundle?
-//    ): View? {
-//        // Inflate the layout for this fragment
-//        return inflater.inflate(R.layout.fragment_movie_detail, container, false)
-//    }
-//}
-
-//class MovieDetailFragment : Fragment() {
-//    private lateinit var titleTextView: TextView
-//    private lateinit var descriptionTextView: TextView
-//    private lateinit var movieImageView: ImageView
-//
-//    override fun onCreateView(
-//        inflater: LayoutInflater, container: ViewGroup?,
-//        savedInstanceState: Bundle?
-//    ): View? {
-//        val view = inflater.inflate(R.layout.fragment_movie_detail, container, false)
-//
-//        titleTextView = view.findViewById(R.id.detailTitleTextView)
-//        descriptionTextView = view.findViewById(R.id.detailDescriptionTextView)
-//        movieImageView = view.findViewById(R.id.detailMovieImageView)
-//
-//        // Retrieve the selected movie details from arguments
-//        val selectedMovie = arguments?.let { MovieDetailFragmentArgs.fromBundle(it).selectedMovie }
-//
-//        // Display movie details
-//        selectedMovie?.let {
-//            titleTextView.text = it.title
-//            descriptionTextView.text = it.description
-//            Glide.with(requireContext())
-//                .load(it.imageUrl)
-//                .into(movieImageView)
-//        }
-//
-//        return view
-//    }
-//}
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
+import com.example.firstapplication.databinding.FragmentMovieDetailBinding
 
 class MovieDetailFragment : Fragment() {
-    private lateinit var titleTextView: TextView
-    private lateinit var descriptionTextView: TextView
-    private lateinit var movieImageView: ImageView
+
+    lateinit var binding: FragmentMovieDetailBinding
+
+    val args: MovieDetailFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_movie_detail, container, false)
+        return inflater.inflate(R.layout.fragment_movie_detail, container, false)
+    }
 
-        titleTextView = view.findViewById(R.id.title)
-        descriptionTextView = view.findViewById(R.id.description)
-        movieImageView = view.findViewById(R.id.img)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        val selectedMovie = arguments?.let { MovieDetailFragmentArgs.fromBundle(it).selectedMovie }
+        val title = view.findViewById<TextView>(R.id.title)
+        val description = view.findViewById<TextView>(R.id.description)
+        val img = view.findViewById<ImageView>(R.id.img)
 
-        selectedMovie?.let {
-            titleTextView.text = it.title
-            descriptionTextView.text = it.description
-            Glide.with(requireContext())
-                .load(it.imageUrl)
-                .into(movieImageView)
+        val string1 = args.title
+        val string2 = args.description
+        val img1 = args.image
+
+        title.text = string1
+        description.text = string2
+        img.setImageResource(img1)
+
+        val button = view.findViewById<Button>(R.id.buttonTo1)
+        button.setOnClickListener {
+            findNavController().navigate(R.id.action_movieDetailFragment_to_movieListFragment)
         }
-
-        return view
     }
 }
